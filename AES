@@ -1,0 +1,14 @@
+header = b"header"
+
+#Encryption
+cipher = AES.new(key, AES.MODE_GCM)
+cipher.update(header)
+
+cipher_text, tag = cipher.encrypt_and_digest(data)
+nonce = cipher.nonce
+
+#Decryption
+decrypt_cipher = AES.new(key, AES.MODE_GCM, nonce=nonce)
+decrypt_cipher.update(header)
+
+plain_text = decrypt_cipher.decrypt_and_verify(cipher_text, tag)
